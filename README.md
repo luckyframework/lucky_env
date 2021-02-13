@@ -1,6 +1,6 @@
 # Lucky::Env
 
-An environment variable manager
+Yet another environment variable manager. Read from a file like a `.env`
 
 ## Installation
 
@@ -16,15 +16,33 @@ An environment variable manager
 
 ## Usage
 
-```crystal
-require "lucky_env"
+### Environment variable file
+Create your "env" file. Name it whatever you want. Most common is `.env`.
+
+The file is created with key/value pairs separated by `=`.
+
+```text
+LUCKY_ENV=development
+DEV_PORT=3002
 ```
 
-TODO: Write usage instructions here
+### Crystal code
+
+```crystal
+require "lucky_env"
+
+LuckyEnv.load(".env")
+
+ENV["LUCKY_ENV"] == "development"
+```
 
 ## Development
 
-TODO: Write development instructions here
+Install shards `shards install`, and start making changes.
+Be sure to run `./bin/ameba`, and the crystal formatter `crystal tool format spec src`.
+
+Read through the issues for things you can work on. If you have an idea, feel free to
+open a new issue!
 
 ## Contributing
 
