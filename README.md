@@ -1,4 +1,4 @@
-# Lucky::Env
+# LuckyEnv
 
 Yet another environment variable manager. Read from a file like a `.env`
 
