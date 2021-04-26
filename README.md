@@ -29,11 +29,12 @@ DEV_PORT=3002
 ### Crystal code
 
 ```crystal
+# This would normally go in your `src/shards.cr` file
 require "lucky_env"
 
 LuckyEnv.load(".env")
 
-ENV["LUCKY_ENV"] == "development"
+ENV["LUCKY_ENV"] == "development" # => true
 ```
 
 ## Development
