@@ -6,6 +6,7 @@ module LuckyEnv
   VERSION = "0.1.1"
 
   # Parses the `file_path`, and loads the results in to `ENV`
+  # raises `LuckyEnv::MissingFileError` if the file is missing
   def self.load(file_path : String) : Hash(String, String)
     data = Parser.new.read_file(file_path)
 
@@ -14,5 +15,12 @@ module LuckyEnv
     end
 
     data
+  end
+
+  # Returns `nil` if the file is missing
+  def self.load?(file_path : String) : Hash(String, String)?
+    if File.exists?(file_path) || File.symlink?(file_path)
+      load(file_path)
+    end
   end
 end
