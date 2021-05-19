@@ -3,7 +3,7 @@ require "./lucky_env/string_modifier"
 require "./lucky_env/*"
 
 module LuckyEnv
-  VERSION = "0.1.1"
+  VERSION = "0.1.2"
 
   # Parses the `file_path`, and loads the results in to `ENV`
   # raises `LuckyEnv::MissingFileError` if the file is missing
