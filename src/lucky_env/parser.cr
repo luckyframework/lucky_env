@@ -8,10 +8,13 @@ module LuckyEnv
 
       if key
         value = scanner.scan_until(/$/).to_s.strip
-        value = remove_wrapped_quotes(value)
-        key = format_key(key)
-
-        {key, value}
+        if value
+          value = remove_wrapped_quotes(value)
+          key = format_key(key)
+          {key, value}
+        else
+          {key, ""}
+        end
       else
         raise InvalidEnvFormatError.new <<-ERROR
         Invalid format for ENV. Make sure the value is formatted like this:

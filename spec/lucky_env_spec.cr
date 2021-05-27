@@ -19,6 +19,12 @@ describe LuckyEnv do
       ENV["LUCKY_ENV"].should eq "test"
       ENV["DEV_PORT"].should eq "3500"
     end
+
+    it "handles empty values" do
+      results = LuckyEnv.load("./spec/support/.env.test")
+      results["LUCKY_BLANK"].should eq ""
+      ENV["LUCKY_BLANK"].should eq ""
+    end
   end
 
   describe "load?" do
