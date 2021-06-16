@@ -32,7 +32,12 @@ DEV_PORT=3002
 # This would normally go in your `src/shards.cr` file
 require "lucky_env"
 
+# Loads the ".env" file. Raises if it is missing
 LuckyEnv.load(".env")
+
+# Use `load?` if the file is optional. 
+# This will not raise if the file is missing
+LuckyEnv.load?(".env")
 
 ENV["LUCKY_ENV"] == "development" # => true
 ```
