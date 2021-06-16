@@ -42,6 +42,11 @@ describe LuckyEnv::Parser do
       data = parser.parse_value(value)
       data[0].should eq "WONKY_ENV"
       data[1].should eq "wat"
+
+      value = "ENV_WITH_NO_VALUE="
+      data = parser.parse_value(value)
+      data[0].should eq "ENV_WITH_NO_VALUE"
+      data[1].should eq ""
     end
   end
 
