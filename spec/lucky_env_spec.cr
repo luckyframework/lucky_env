@@ -35,4 +35,90 @@ describe LuckyEnv do
       ENV["LUCKY_ENV"].should eq "test"
     end
   end
+
+  describe ".development?" do
+    context "when LUCKY_ENV is not set" do
+      it "returns true" do
+        with_lucky_env(nil) do
+          LuckyEnv.development?.should be_true
+        end
+      end
+    end
+
+    context "when LUCKY_ENV is set to 'development'" do
+      it "returns true" do
+        with_lucky_env("development") do
+          LuckyEnv.development?.should be_true
+        end
+      end
+    end
+
+    context "when LUCKY_ENV is set to something else" do
+      it "returns false" do
+        with_lucky_env("test") do
+          LuckyEnv.development?.should be_false
+        end
+      end
+    end
+  end
+
+  describe ".test?" do
+    context "when LUCKY_ENV is not set" do
+      it "returns false" do
+        with_lucky_env(nil) do
+          LuckyEnv.test?.should be_false
+        end
+      end
+    end
+
+    context "when LUCKY_ENV is set to 'test'" do
+      it "returns true" do
+        with_lucky_env("test") do
+          LuckyEnv.test?.should be_true
+        end
+      end
+    end
+
+    context "when LUCKY_ENV is set to something else" do
+      it "returns false" do
+        with_lucky_env("development") do
+          LuckyEnv.test?.should be_false
+        end
+      end
+    end
+  end
+
+  describe ".production?" do
+    context "when LUCKY_ENV is not set" do
+      it "returns true" do
+        with_lucky_env(nil) do
+          LuckyEnv.production?.should be_false
+        end
+      end
+    end
+
+    context "when LUCKY_ENV is set to 'production'" do
+      it "returns true" do
+        with_lucky_env("production") do
+          LuckyEnv.production?.should be_true
+        end
+      end
+    end
+
+    context "when LUCKY_ENV is set to something else" do
+      it "returns false" do
+        with_lucky_env("test") do
+          LuckyEnv.production?.should be_false
+        end
+      end
+    end
+  end
+end
+
+private def with_lucky_env(value, &block)
+  original_value = ENV["LUCKY_ENV"]
+  ENV["LUCKY_ENV"] = value
+  block.call
+ensure
+  ENV["LUCKY_ENV"] = original_value
 end

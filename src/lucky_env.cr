@@ -23,4 +23,14 @@ module LuckyEnv
       load(file_path)
     end
   end
+
+  def self.name
+    ENV.fetch("LUCKY_ENV", "development")
+  end
+
+  {% for env in %w[development test production] %}
+    def self.{{ env.id }}?
+      name == {{ env }}
+    end
+  {% end %}
 end
