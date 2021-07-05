@@ -5,6 +5,12 @@ require "./lucky_env/*"
 module LuckyEnv
   VERSION = "0.1.2"
 
+  macro add_env(name)
+    def LuckyEnv.{{ name.id }}?
+      environment == {{ name.id.stringify }}
+    end
+  end
+
   # Parses the `file_path`, and loads the results in to `ENV`
   # raises `LuckyEnv::MissingFileError` if the file is missing
   def self.load(file_path : String) : Hash(String, String)
@@ -24,17 +30,15 @@ module LuckyEnv
     end
   end
 
-  def self.name
-    ENV.fetch("LUCKY_ENV", "development")
-  end
-
-  {% for env in %w[development test production] %}
-    def self.{{ env.id }}?
-      name == {{ env }}
-    end
-  {% end %}
-
   def self.task?
     ENV["LUCKY_TASK"] == "true" || ENV["LUCKY_TASK"] == "1"
   end
+
+  def self.environment
+    ENV.fetch("LUCKY_ENV", "development")
+  end
+
+  add_env :development
+  add_env :production
+  add_env :test
 end
