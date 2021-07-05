@@ -35,4 +35,116 @@ describe LuckyEnv do
       ENV["LUCKY_ENV"].should eq "test"
     end
   end
+
+  describe ".development?" do
+    context "when LUCKY_ENV is not set" do
+      it "returns true" do
+        with_env("LUCKY_ENV", nil) do
+          LuckyEnv.development?.should be_true
+        end
+      end
+    end
+
+    context "when LUCKY_ENV is set to 'development'" do
+      it "returns true" do
+        with_env("LUCKY_ENV", "development") do
+          LuckyEnv.development?.should be_true
+        end
+      end
+    end
+
+    context "when LUCKY_ENV is set to something else" do
+      it "returns false" do
+        with_env("LUCKY_ENV", "test") do
+          LuckyEnv.development?.should be_false
+        end
+      end
+    end
+  end
+
+  describe ".test?" do
+    context "when LUCKY_ENV is not set" do
+      it "returns false" do
+        with_env("LUCKY_ENV", nil) do
+          LuckyEnv.test?.should be_false
+        end
+      end
+    end
+
+    context "when LUCKY_ENV is set to 'test'" do
+      it "returns true" do
+        with_env("LUCKY_ENV", "test") do
+          LuckyEnv.test?.should be_true
+        end
+      end
+    end
+
+    context "when LUCKY_ENV is set to something else" do
+      it "returns false" do
+        with_env("LUCKY_ENV", "development") do
+          LuckyEnv.test?.should be_false
+        end
+      end
+    end
+  end
+
+  describe ".production?" do
+    context "when LUCKY_ENV is not set" do
+      it "returns true" do
+        with_env("LUCKY_ENV", nil) do
+          LuckyEnv.production?.should be_false
+        end
+      end
+    end
+
+    context "when LUCKY_ENV is set to 'production'" do
+      it "returns true" do
+        with_env("LUCKY_ENV", "production") do
+          LuckyEnv.production?.should be_true
+        end
+      end
+    end
+
+    context "when LUCKY_ENV is set to something else" do
+      it "returns false" do
+        with_env("LUCKY_ENV", "test") do
+          LuckyEnv.production?.should be_false
+        end
+      end
+    end
+  end
+
+  describe ".task?" do
+    context "when LUCKY_TASK is set to 'true'" do
+      it "returns true" do
+        with_env("LUCKY_TASK", "true") do
+          LuckyEnv.task?.should be_true
+        end
+      end
+    end
+
+    context "when LUCKY_TASK is set to '1'" do
+      it "returns true" do
+        with_env("LUCKY_TASK", "1") do
+          LuckyEnv.task?.should be_true
+        end
+      end
+    end
+
+    context "when LUCKY_TASK is set to something else" do
+      it "returns false" do
+        with_env("LUCKY_TASK", "false") do
+          LuckyEnv.task?.should be_false
+        end
+      end
+    end
+  end
+end
+
+private def with_env(key, value, &block)
+  original_value = ENV[key]?
+  ENV[key] = value
+  block.call
+ensure
+  ENV[key] = original_value
 end
