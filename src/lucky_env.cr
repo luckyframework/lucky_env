@@ -3,7 +3,7 @@ require "./lucky_env/string_modifier"
 require "./lucky_env/*"
 
 module LuckyEnv
-  VERSION = "0.1.2"
+  VERSION = {{ `shards version "#{__DIR__}"`.chomp.stringify }}
 
   macro add_env(name)
     def LuckyEnv.{{ name.id }}?
