@@ -1,6 +1,12 @@
 require "./spec_helper"
 
 describe LuckyEnv do
+  original_env = ENV.to_h
+
+  around_each do |example|
+    restore_env(original_env) { example.run }
+  end
+
   describe "load" do
     it "reads the file, loads the results in to ENV, and returns the results" do
       results = LuckyEnv.load("./spec/support/.env.test")
@@ -39,25 +45,22 @@ describe LuckyEnv do
   describe ".development?" do
     context "when LUCKY_ENV is not set" do
       it "returns true" do
-        with_env("LUCKY_ENV", nil) do
-          LuckyEnv.development?.should be_true
-        end
+        ENV.delete("LUCKY_ENV")
+        LuckyEnv.development?.should be_true
       end
     end
 
     context "when LUCKY_ENV is set to 'development'" do
       it "returns true" do
-        with_env("LUCKY_ENV", "development") do
-          LuckyEnv.development?.should be_true
-        end
+        ENV["LUCKY_ENV"] = "development"
+        LuckyEnv.development?.should be_true
       end
     end
 
     context "when LUCKY_ENV is set to something else" do
       it "returns false" do
-        with_env("LUCKY_ENV", "test") do
-          LuckyEnv.development?.should be_false
-        end
+        ENV["LUCKY_ENV"] = "test"
+        LuckyEnv.development?.should be_false
       end
     end
   end
@@ -65,51 +68,45 @@ describe LuckyEnv do
   describe ".test?" do
     context "when LUCKY_ENV is not set" do
       it "returns false" do
-        with_env("LUCKY_ENV", nil) do
-          LuckyEnv.test?.should be_false
-        end
+        ENV.delete("LUCKY_ENV")
+        LuckyEnv.test?.should be_false
       end
     end
 
     context "when LUCKY_ENV is set to 'test'" do
       it "returns true" do
-        with_env("LUCKY_ENV", "test") do
-          LuckyEnv.test?.should be_true
-        end
+        ENV["LUCKY_ENV"] = "test"
+        LuckyEnv.test?.should be_true
       end
     end
 
     context "when LUCKY_ENV is set to something else" do
       it "returns false" do
-        with_env("LUCKY_ENV", "development") do
-          LuckyEnv.test?.should be_false
-        end
+        ENV["LUCKY_ENV"] = "development"
+        LuckyEnv.test?.should be_false
       end
     end
   end
 
   describe ".production?" do
     context "when LUCKY_ENV is not set" do
-      it "returns true" do
-        with_env("LUCKY_ENV", nil) do
-          LuckyEnv.production?.should be_false
-        end
+      it "returns false" do
+        ENV.delete("LUCKY_ENV")
+        LuckyEnv.production?.should be_false
       end
     end
 
     context "when LUCKY_ENV is set to 'production'" do
       it "returns true" do
-        with_env("LUCKY_ENV", "production") do
-          LuckyEnv.production?.should be_true
-        end
+        ENV["LUCKY_ENV"] = "production"
+        LuckyEnv.production?.should be_true
       end
     end
 
     context "when LUCKY_ENV is set to something else" do
       it "returns false" do
-        with_env("LUCKY_ENV", "test") do
-          LuckyEnv.production?.should be_false
-        end
+        ENV["LUCKY_ENV"] = "test"
+        LuckyEnv.production?.should be_false
       end
     end
   end
@@ -117,34 +114,30 @@ describe LuckyEnv do
   describe ".task?" do
     context "when LUCKY_TASK is set to 'true'" do
       it "returns true" do
-        with_env("LUCKY_TASK", "true") do
-          LuckyEnv.task?.should be_true
-        end
+        ENV["LUCKY_TASK"] = "true"
+        LuckyEnv.task?.should be_true
       end
     end
 
     context "when LUCKY_TASK is set to '1'" do
       it "returns true" do
-        with_env("LUCKY_TASK", "1") do
-          LuckyEnv.task?.should be_true
-        end
+        ENV["LUCKY_TASK"] = "1"
+        LuckyEnv.task?.should be_true
       end
     end
 
     context "when LUCKY_TASK is set to something else" do
       it "returns false" do
-        with_env("LUCKY_TASK", "false") do
-          LuckyEnv.task?.should be_false
-        end
+        ENV["LUCKY_TASK"] = "false"
+        LuckyEnv.task?.should be_false
       end
     end
   end
 end
 
-private def with_env(key, value, &block)
-  original_value = ENV[key]?
-  ENV[key] = value
-  block.call
+private def restore_env(env)
+  yield
 ensure
-  ENV[key] = original_value
+  ENV.clear
+  env.each { |key, value| ENV[key] = value }
 end
