@@ -1,5 +1,11 @@
 require "./spec_helper"
 
+# The default environments are configured to look for Lucky-specific environment
+# files. We redefine them here for testing purposes.
+LuckyEnv.add_env :development, env_file: "./spec/support/.env"
+LuckyEnv.add_env :production, env_file: "./spec/support/.env.production"
+LuckyEnv.add_env :test, env_file: "./spec/support/.env.test"
+
 describe LuckyEnv do
   original_env = ENV.to_h
 
@@ -25,6 +31,36 @@ describe LuckyEnv do
       ENV["LUCKY_ENV"].should eq "test"
       ENV["DEV_PORT"].should eq "3500"
     end
+
+    context "when no file path is provided" do
+      it "reads the environment file based on the current environment" do
+        ENV["LUCKY_ENV"] = "development"
+        LuckyEnv.load
+        ENV["ENV_FILE"]?.should eq(".env")
+
+        ENV["LUCKY_ENV"] = "production"
+        LuckyEnv.load
+        ENV["ENV_FILE"]?.should eq(".env.production")
+
+        ENV["LUCKY_ENV"] = "test"
+        LuckyEnv.load
+        ENV["ENV_FILE"]?.should eq(".env.test")
+      end
+
+      context "when environment does not exist" do
+        it "raises an error" do
+          ENV["LUCKY_ENV"] = "staging"
+          expected_msg = <<-MSG
+          Unknown environment staging. Have you forgotten to add it?
+
+          LuckyEnv.add_env :staging, env_file: File.expand_path(".env.staging")
+          MSG
+          expect_raises(LuckyEnv::UnknownEnvironmentError, expected_msg) do
+            LuckyEnv.load
+          end
+        end
+      end
+    end
   end
 
   describe "load?" do
@@ -39,6 +75,29 @@ describe LuckyEnv do
       data = results.not_nil!
       data["LUCKY_ENV"].should eq "test"
       ENV["LUCKY_ENV"].should eq "test"
+    end
+
+    context "when no file path is provided" do
+      it "reads the environment file based on the current environment" do
+        ENV["LUCKY_ENV"] = "development"
+        LuckyEnv.load?
+        ENV["ENV_FILE"]?.should eq(".env")
+
+        ENV["LUCKY_ENV"] = "production"
+        LuckyEnv.load?
+        ENV["ENV_FILE"]?.should eq(".env.production")
+
+        ENV["LUCKY_ENV"] = "test"
+        LuckyEnv.load?
+        ENV["ENV_FILE"]?.should eq(".env.test")
+      end
+
+      context "when environment does not exist" do
+        it "returns nil" do
+          ENV["LUCKY_ENV"] = "staging"
+          LuckyEnv.load?.should be_nil
+        end
+      end
     end
   end
 
