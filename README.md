@@ -6,17 +6,18 @@ Yet another environment variable manager. Read from a file like a `.env`
 
 1. Add the dependency to your `shard.yml`:
 
-   ```yaml
-   dependencies:
-     lucky_env:
-       github: luckyframework/lucky_env
-   ```
+```yaml
+dependencies:
+  lucky_env:
+    github: luckyframework/lucky_env
+```
 
 2. Run `shards install`
 
 ## Usage
 
 ### Environment variable file
+
 Create your "env" file. Name it whatever you want. Most common is `.env`.
 
 The file is created with key/value pairs separated by `=`.
@@ -40,6 +41,14 @@ LuckyEnv.load(".env")
 LuckyEnv.load?(".env")
 
 ENV["LUCKY_ENV"] == "development" # => true
+
+# Returns whatever `ENV["LUCKY_ENV"]` is set to, or `"development"` if not set.
+LuckyEnv.environment # => "development"
+
+# Environment predicates
+LuckyEnv.development? # => true
+LuckyEnv.production? # => false
+LuckyEnv.test? # => false
 ```
 
 ## Development
