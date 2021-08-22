@@ -132,6 +132,12 @@ describe LuckyEnv do
         LuckyEnv.task?.should be_false
       end
     end
+
+    context "when LUCKY_TASK isn't set" do
+      it "returns false" do
+        LuckyEnv.task?.should be_false
+      end
+    end
   end
 end
 

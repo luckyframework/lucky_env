@@ -31,7 +31,7 @@ module LuckyEnv
   end
 
   def self.task?
-    ENV["LUCKY_TASK"] == "true" || ENV["LUCKY_TASK"] == "1"
+    ENV["LUCKY_TASK"]? == "true" || ENV["LUCKY_TASK"]? == "1"
   end
 
   def self.environment
