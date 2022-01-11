@@ -38,8 +38,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: crystal-lang/install-crystal@v1
-        with:
-          crystal: ${{matrix.crystal_version}}
+      with:
+        crystal: ${{matrix.crystal_version}}
     - name: Install dependencies
       run: shards install
     - name: Run tests
