@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 1.2.2">
+<meta name="crystal_docs.project_version" content="master">
+<meta name="crystal_docs.project_name" content="lucky_env">
+
+
+
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../js/doc.js"></script>
+
+  <meta name="repository-name" content="lucky_env">
+  <title>LuckyEnv::Parser - lucky_env master</title>
+  <script type="text/javascript">
+    CrystalDocs.base_path = "../";
+  </script>
+</head>
+<body>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="../index.html">
+          lucky_env
+        </a>
+      </h1>
+
+      <span class="project-version">
+        master
+      </span>
+    </div>
+  </div>
+
+  <div class="search-results hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class="parent open current" data-id="lucky_env/LuckyEnv" data-name="luckyenv">
+      <a href="../LuckyEnv.html">LuckyEnv</a>
+      
+        <ul>
+  
+  <li class=" " data-id="lucky_env/LuckyEnv/InvalidEnvFormatError" data-name="luckyenv::invalidenvformaterror">
+      <a href="../LuckyEnv/InvalidEnvFormatError.html">InvalidEnvFormatError</a>
+      
+    </li>
+  
+  <li class=" " data-id="lucky_env/LuckyEnv/MissingFileError" data-name="luckyenv::missingfileerror">
+      <a href="../LuckyEnv/MissingFileError.html">MissingFileError</a>
+      
+    </li>
+  
+  <li class=" current" data-id="lucky_env/LuckyEnv/Parser" data-name="luckyenv::parser">
+      <a href="../LuckyEnv/Parser.html">Parser</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="lucky_env/StringModifier" data-name="stringmodifier">
+      <a href="../StringModifier.html">StringModifier</a>
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">struct</span> LuckyEnv::Parser
+
+</h1>
+
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../LuckyEnv/Parser.html">LuckyEnv::Parser</a></li><li class="superclass">Struct</li><li class="superclass">Value</li><li class="superclass">Object</li></ul>
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="included-modules" class="anchor" href="#included-modules">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Included Modules
+  </h2>
+  <ul class="other-types-list">
+    
+      <li class="other-type"><a href="../StringModifier.html">StringModifier</a></li>
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="defined-in" class="anchor" href="#defined-in">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Defined in:
+  </h2>
+  
+    
+      <a href="https://github.com/luckyframework/lucky_env/blob/a81888bf4d05ec8ed0c377dec95b68a28c2c4b78/src/lucky_env/parser.cr#L2" target="_blank">
+        lucky_env/parser.cr
+      </a>
+    
+    <br/>
+  
+
+
+
+
+
+  <h2>
+    <a id="constructors" class="anchor" href="#constructors">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructors
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#new-class-method" class="signature"><strong>.new</strong></a>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#initialize-instance-method" class="signature"><strong>#initialize</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#parse_value%28env_value%3AString%29%3ATuple%28String%2CString%29-instance-method" class="signature"><strong>#parse_value</strong>(env_value : String) : Tuple(String, String)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#read_file%28file_path%3AString%29%3AHash%28String%2CString%29-instance-method" class="signature"><strong>#read_file</strong>(file_path : String) : Hash(String, String)</a>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+<div class="methods-inherited">
+  
+    
+
+  <h3>Instance methods inherited from module <code><a href="../StringModifier.html">StringModifier</a></code></h3>
+  
+  
+    <a href="../StringModifier.html#format_key%28key%3AString%29%3AString-instance-method" class="tooltip">
+      <span>format_key(key : String) : String</span>
+    format_key</a>, 
+    
+  
+    <a href="../StringModifier.html#remove_wrapped_quotes%28string%3AString%29%3AString-instance-method" class="tooltip">
+      <span>remove_wrapped_quotes(string : String) : String</span>
+    remove_wrapped_quotes</a>
+    
+  
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+</div>
+
+
+  <h2>
+    <a id="constructor-detail" class="anchor" href="#constructor-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructor Detail
+  </h2>
+  
+    <div class="entry-detail" id="new-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>
+
+        <a class="method-permalink" href="#new-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/luckyframework/lucky_env/blob/a81888bf4d05ec8ed0c377dec95b68a28c2c4b78/src/lucky_env/parser.cr#L2" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+
+
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="initialize-instance-method">
+      <div class="signature">
+        
+        def <strong>initialize</strong>
+
+        <a class="method-permalink" href="#initialize-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/luckyframework/lucky_env/blob/a81888bf4d05ec8ed0c377dec95b68a28c2c4b78/src/lucky_env/parser.cr#L2" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="parse_value(env_value:String):Tuple(String,String)-instance-method">
+      <div class="signature">
+        
+        def <strong>parse_value</strong>(env_value : String) : Tuple(String, String)
+
+        <a class="method-permalink" href="#parse_value%28env_value%3AString%29%3ATuple%28String%2CString%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/luckyframework/lucky_env/blob/a81888bf4d05ec8ed0c377dec95b68a28c2c4b78/src/lucky_env/parser.cr#L5" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="read_file(file_path:String):Hash(String,String)-instance-method">
+      <div class="signature">
+        
+        def <strong>read_file</strong>(file_path : String) : Hash(String, String)
+
+        <a class="method-permalink" href="#read_file%28file_path%3AString%29%3AHash%28String%2CString%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/luckyframework/lucky_env/blob/a81888bf4d05ec8ed0c377dec95b68a28c2c4b78/src/lucky_env/parser.cr#L24" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+
+</div>
+
+</body>
+</html>
