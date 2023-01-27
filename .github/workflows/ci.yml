@@ -39,8 +39,7 @@ jobs:
     - uses: crystal-lang/install-crystal@v1
       with:
         crystal: ${{ matrix.crystal_version }}
-    - if: matrix.os == 'ubuntu-latest'
-      name: Install dependencies
-      run: shards install
+    - name: Install dependencies
+      run: shards install --skip-postinstall --skip-executables
     - name: Run tests
       run: crystal spec
