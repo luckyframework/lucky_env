@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.3.2">
+<meta name="generator" content="Crystal Docs 1.6.2">
 <meta name="crystal_docs.project_version" content="main">
 <meta name="crystal_docs.project_name" content="lucky_env">
 
@@ -121,21 +121,21 @@
   </h2>
   
     
-      <a href="https://github.com/luckyframework/lucky_env/blob/4d596010ec6804cc86cbdba00b187cf4ab378aaf/src/lucky_env.cr#L5" target="_blank">
+      <a href="https://github.com/luckyframework/lucky_env/blob/c7fbb17f4825c40dd68096429384e8bc751b2f9e/src/lucky_env.cr#L5" target="_blank">
         lucky_env.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/luckyframework/lucky_env/blob/4d596010ec6804cc86cbdba00b187cf4ab378aaf/src/lucky_env/errors.cr#L1" target="_blank">
+      <a href="https://github.com/luckyframework/lucky_env/blob/c7fbb17f4825c40dd68096429384e8bc751b2f9e/src/lucky_env/errors.cr#L1" target="_blank">
         lucky_env/errors.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/luckyframework/lucky_env/blob/4d596010ec6804cc86cbdba00b187cf4ab378aaf/src/lucky_env/parser.cr#L1" target="_blank">
+      <a href="https://github.com/luckyframework/lucky_env/blob/c7fbb17f4825c40dd68096429384e8bc751b2f9e/src/lucky_env/parser.cr#L1" target="_blank">
         lucky_env/parser.cr
       </a>
     
@@ -157,7 +157,7 @@
   <dl>
     
       <dt class="entry-const" id="VERSION">
-        <strong>VERSION</strong> = <code>{{ (<span class="s">`shards version \&quot;/home/runner/work/lucky_env/lucky_env/src\&quot;`</span>).chomp.stringify }}</code>
+        <strong>VERSION</strong> = <code><span class="o">{{</span> (<span class="s">`shards version \&quot;/home/runner/work/lucky_env/lucky_env/src\&quot;`</span>).chomp.stringify }}</code>
       </dt>
       
     
@@ -195,7 +195,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#load%3F%28file_path%3AString%29%3AHash%28String%2CString%29%3F-class-method" class="signature"><strong>.load?</strong>(file_path : String) : Hash(String, String)?</a>
+        <a href="#load%3F%28file_path%3AString%29%3AHash%28String%2CString%29%7CNil-class-method" class="signature"><strong>.load?</strong>(file_path : String) : Hash(String, String) | Nil</a>
         
           <div class="summary"><p>Returns <code>nil</code> if the file is missing</p></div>
         
@@ -268,7 +268,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/luckyframework/lucky_env/blob/4d596010ec6804cc86cbdba00b187cf4ab378aaf/src/lucky_env.cr#L41" target="_blank">View source</a>]
+          [<a href="https://github.com/luckyframework/lucky_env/blob/c7fbb17f4825c40dd68096429384e8bc751b2f9e/src/lucky_env.cr#L41" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -284,7 +284,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/luckyframework/lucky_env/blob/4d596010ec6804cc86cbdba00b187cf4ab378aaf/src/lucky_env.cr#L37" target="_blank">View source</a>]
+          [<a href="https://github.com/luckyframework/lucky_env/blob/c7fbb17f4825c40dd68096429384e8bc751b2f9e/src/lucky_env.cr#L37" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -306,17 +306,17 @@ raises <code><a href="LuckyEnv/MissingFileError.html">LuckyEnv::MissingFileError
       <br/>
       <div>
         
-          [<a href="https://github.com/luckyframework/lucky_env/blob/4d596010ec6804cc86cbdba00b187cf4ab378aaf/src/lucky_env.cr#L16" target="_blank">View source</a>]
+          [<a href="https://github.com/luckyframework/lucky_env/blob/c7fbb17f4825c40dd68096429384e8bc751b2f9e/src/lucky_env.cr#L16" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="load?(file_path:String):Hash(String,String)?-class-method">
+    <div class="entry-detail" id="load?(file_path:String):Hash(String,String)|Nil-class-method">
       <div class="signature">
         
-        def self.<strong>load?</strong>(file_path : String) : Hash(String, String)?
+        def self.<strong>load?</strong>(file_path : String) : Hash(String, String) | Nil
 
-        <a class="method-permalink" href="#load%3F%28file_path%3AString%29%3AHash%28String%2CString%29%3F-class-method">#</a>
+        <a class="method-permalink" href="#load%3F%28file_path%3AString%29%3AHash%28String%2CString%29%7CNil-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -327,7 +327,7 @@ raises <code><a href="LuckyEnv/MissingFileError.html">LuckyEnv::MissingFileError
       <br/>
       <div>
         
-          [<a href="https://github.com/luckyframework/lucky_env/blob/4d596010ec6804cc86cbdba00b187cf4ab378aaf/src/lucky_env.cr#L27" target="_blank">View source</a>]
+          [<a href="https://github.com/luckyframework/lucky_env/blob/c7fbb17f4825c40dd68096429384e8bc751b2f9e/src/lucky_env.cr#L27" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -343,7 +343,7 @@ raises <code><a href="LuckyEnv/MissingFileError.html">LuckyEnv::MissingFileError
       <br/>
       <div>
         
-          [<a href="https://github.com/luckyframework/lucky_env/blob/4d596010ec6804cc86cbdba00b187cf4ab378aaf/src/lucky_env.cr#L42" target="_blank">View source</a>]
+          [<a href="https://github.com/luckyframework/lucky_env/blob/c7fbb17f4825c40dd68096429384e8bc751b2f9e/src/lucky_env.cr#L42" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -359,7 +359,7 @@ raises <code><a href="LuckyEnv/MissingFileError.html">LuckyEnv::MissingFileError
       <br/>
       <div>
         
-          [<a href="https://github.com/luckyframework/lucky_env/blob/4d596010ec6804cc86cbdba00b187cf4ab378aaf/src/lucky_env.cr#L33" target="_blank">View source</a>]
+          [<a href="https://github.com/luckyframework/lucky_env/blob/c7fbb17f4825c40dd68096429384e8bc751b2f9e/src/lucky_env.cr#L33" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -375,7 +375,7 @@ raises <code><a href="LuckyEnv/MissingFileError.html">LuckyEnv::MissingFileError
       <br/>
       <div>
         
-          [<a href="https://github.com/luckyframework/lucky_env/blob/4d596010ec6804cc86cbdba00b187cf4ab378aaf/src/lucky_env.cr#L43" target="_blank">View source</a>]
+          [<a href="https://github.com/luckyframework/lucky_env/blob/c7fbb17f4825c40dd68096429384e8bc751b2f9e/src/lucky_env.cr#L43" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -405,7 +405,7 @@ raises <code><a href="LuckyEnv/MissingFileError.html">LuckyEnv::MissingFileError
       <br/>
       <div>
         
-          [<a href="https://github.com/luckyframework/lucky_env/blob/4d596010ec6804cc86cbdba00b187cf4ab378aaf/src/lucky_env.cr#L8" target="_blank">View source</a>]
+          [<a href="https://github.com/luckyframework/lucky_env/blob/c7fbb17f4825c40dd68096429384e8bc751b2f9e/src/lucky_env.cr#L8" target="_blank">View source</a>]
         
       </div>
     </div>
