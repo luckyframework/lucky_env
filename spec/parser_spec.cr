@@ -60,6 +60,9 @@ describe LuckyEnv::Parser do
       data["SECRET_KEY_BASE"].should eq "j5I0VrpzT1Of7dhCA="
       data["ASSET_HOST"].should eq "https://luckyframework.org"
       data["ENV_WITH_SPACE"].should eq "start_end"
+      data["APP_NAME"].should eq "my_app"
+      data["DB_NAME"].should eq "my_app_development"
+      data["LITERAL"].should eq "${NOT_EXISTS_ENV}"
     end
   end
 end
