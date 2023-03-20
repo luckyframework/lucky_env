@@ -33,7 +33,19 @@ module LuckyEnv
           hash[key] = value
         end
 
-        hash
+        keys = hash.keys
+
+        hash.transform_values do |value|
+          keys.each do |key|
+            if value =~ /\$\{#{key}\}/
+              value = value.sub("${#{key}}", hash[key])
+            else
+              value
+            end
+          end
+
+          value
+        end
       else
         raise MissingFileError.new <<-ERROR
         The file #{file_path} could not be found.

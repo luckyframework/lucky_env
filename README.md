@@ -23,8 +23,10 @@ Create your "env" file. Name it whatever you want. Most common is `.env`.
 The file is created with key/value pairs separated by `=`.
 
 ```text
+APP_NAME=my_app
 LUCKY_ENV=development
 DEV_PORT=3002
+DB_NAME=${APP_NAME}_${LUCKY_ENV}
 ```
 
 ### Crystal code
