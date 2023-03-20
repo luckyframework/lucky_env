@@ -119,8 +119,10 @@
 </a>Environment variable file</h3>
 <p>Create your &quot;env&quot; file. Name it whatever you want. Most common is <code>.env</code>.</p>
 <p>The file is created with key/value pairs separated by <code>=</code>.</p>
-<pre><code class="language-text">LUCKY_ENV=development
-DEV_PORT=3002</code></pre>
+<pre><code class="language-text">APP_NAME=my_app
+LUCKY_ENV=development
+DEV_PORT=3002
+DB_NAME=${APP_NAME}_${LUCKY_ENV}</code></pre>
 <h3><a id="crystal-code" class="anchor" href="#crystal-code">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
