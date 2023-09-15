@@ -6,7 +6,7 @@ module LuckyEnv
   VERSION = {{ `shards version "#{__DIR__}"`.chomp.stringify }}
 
   macro add_env(name)
-    def LuckyEnv.{{ name.id }}?
+    def LuckyEnv.{{ name.id }}? : Bool
       environment == {{ name.id.stringify }}
     end
   end
@@ -30,11 +30,11 @@ module LuckyEnv
     end
   end
 
-  def self.task?
+  def self.task? : Bool
     ENV["LUCKY_TASK"]? == "true" || ENV["LUCKY_TASK"]? == "1"
   end
 
-  def self.environment
+  def self.environment : String
     ENV.fetch("LUCKY_ENV", "development")
   end
 
