@@ -36,7 +36,7 @@ describe LuckyEnv do
     it "loads the ENV if the file exists" do
       results = LuckyEnv.load?("./spec/support/.env.test")
       results.should_not eq(nil)
-      data = results.not_nil!
+      data = results.as(Hash(String, String))
       data["LUCKY_ENV"].should eq "test"
       ENV["LUCKY_ENV"].should eq "test"
     end
@@ -141,7 +141,7 @@ describe LuckyEnv do
   end
 end
 
-private def restore_env(env)
+private def restore_env(env, &)
   yield
 ensure
   ENV.clear
