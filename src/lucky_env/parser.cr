@@ -30,7 +30,16 @@ module LuckyEnv
           next if comment?(string)
           key, value = parse_value(string)
 
-          hash[key] = value
+          if hash.has_key?(key)
+            raise LuckyEnv::DuplicateKeyDetectedError.new <<-ERROR
+            Duplicate key #{key} found in #{file_path}.
+            To ignore a key, place a # at the front of the line like this:
+
+            # YOUR_KEY=ignored_value
+            ERROR
+          else
+            hash[key] = value
+          end
         end
 
         keys = hash.keys
