@@ -4,4 +4,7 @@ module LuckyEnv
 
   class MissingFileError < Exception
   end
+
+  class DuplicateKeyDetectedError < Exception
+  end
 end

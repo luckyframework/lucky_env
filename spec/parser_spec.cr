@@ -64,6 +64,12 @@ describe LuckyEnv::Parser do
       data["DB_NAME"].should eq "my_app_development"
       data["LITERAL"].should eq "${NOT_EXISTS_ENV}"
     end
+
+    it "raises on duplicate keys detected" do
+      expect_raises(LuckyEnv::DuplicateKeyDetectedError, /Duplicate key HOST found in \.\/spec\/support\/\.badenv/) do
+        parser.read_file("./spec/support/.badenv")
+      end
+    end
   end
 end
 
