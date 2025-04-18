@@ -25,6 +25,53 @@ describe LuckyEnv do
       ENV["LUCKY_ENV"].should eq "test"
       ENV["DEV_PORT"].should eq "3500"
     end
+
+    context "when no file path is provided, reads the environment file based on the current environment" do
+      # Creates a symlink of the env files for testing purposes because
+      # they are looked up in the project directory by default.
+      env_files = [".env", ".env.test", ".env.production", ".env.development"]
+      before_each do
+        env_files.each do |f|
+          File.link("./spec/support/#{f}", f) if !File.exists?(f)
+        end
+      end
+
+      after_each do
+        env_files.each do |f|
+          File.delete(f) if File.exists?(f)
+        end
+      end
+
+      it "reads development environment file" do
+        ENV["LUCKY_ENV"] = "development"
+        results = LuckyEnv.load
+        results["LUCKY_ENV"].should eq "development"
+        ENV["LUCKY_ENV"].should eq "development"
+        ENV["DEV_PORT"].should eq "4500"
+      end
+
+      it "reads test environment file" do
+        ENV["LUCKY_ENV"] = "test"
+        results = LuckyEnv.load
+        results["LUCKY_ENV"].should eq "test"
+        ENV["LUCKY_ENV"].should eq "test"
+        ENV["APP_NAME"].should eq "test_app"
+      end
+
+      it "reads production environment file" do
+        ENV["LUCKY_ENV"] = "production"
+        results = LuckyEnv.load
+        results["LUCKY_ENV"].should eq "production"
+        ENV["SECRET_KEY_BASE"].should eq "Jcj7ki8pFV="
+      end
+
+      it "fall back to .env if no environment is set" do
+        ENV["LUCKY_ENV"] = "undefined-env"
+        results = LuckyEnv.load
+        results["LUCKY_ENV"].should eq "development"
+        ENV["DEV_PORT"].should eq "3500"
+      end
+    end
   end
 
   describe "load?" do
