@@ -5,48 +5,48 @@ describe LuckyEnv::Parser do
     it "returns a tuple with the key and value" do
       value = "NORMAL_ENV=development"
       data = parser.parse_value(value)
-      data[0].should eq "NORMAL_ENV"
-      data[1].should eq "development"
+      data[:key].should eq "NORMAL_ENV"
+      data[:value].should eq "development"
 
       value = "ENV_AS_NUMBER=3500"
       data = parser.parse_value(value)
-      data[0].should eq "ENV_AS_NUMBER"
-      data[1].should eq "3500"
+      data[:key].should eq "ENV_AS_NUMBER"
+      data[:value].should eq "3500"
 
       value = "ENV_WITH_EQUALS=j5I0VrpzT1Of7dhCA="
       data = parser.parse_value(value)
-      data[0].should eq "ENV_WITH_EQUALS"
-      data[1].should eq "j5I0VrpzT1Of7dhCA="
+      data[:key].should eq "ENV_WITH_EQUALS"
+      data[:value].should eq "j5I0VrpzT1Of7dhCA="
 
       value = %<ENV_WITH_QUOTES="https://luckyframework.org">
       data = parser.parse_value(value)
-      data[0].should eq "ENV_WITH_QUOTES"
-      data[1].should eq "https://luckyframework.org"
+      data[:key].should eq "ENV_WITH_QUOTES"
+      data[:value].should eq "https://luckyframework.org"
 
       value = %<ENV_WITH_SINGLE_QUOTES='1 + 1'>
       data = parser.parse_value(value)
-      data[0].should eq "ENV_WITH_SINGLE_QUOTES"
-      data[1].should eq "1 + 1"
+      data[:key].should eq "ENV_WITH_SINGLE_QUOTES"
+      data[:value].should eq "1 + 1"
 
       value = "ENV_WITH_SPACE = start_end "
       data = parser.parse_value(value)
-      data[0].should eq "ENV_WITH_SPACE"
-      data[1].should eq "start_end"
+      data[:key].should eq "ENV_WITH_SPACE"
+      data[:value].should eq "start_end"
 
       value = "little_env=ok"
       data = parser.parse_value(value)
-      data[0].should eq "LITTLE_ENV"
-      data[1].should eq "ok"
+      data[:key].should eq "LITTLE_ENV"
+      data[:value].should eq "ok"
 
       value = "Wonky Env=wat"
       data = parser.parse_value(value)
-      data[0].should eq "WONKY_ENV"
-      data[1].should eq "wat"
+      data[:key].should eq "WONKY_ENV"
+      data[:value].should eq "wat"
 
       value = "ENV_WITH_NO_VALUE="
       data = parser.parse_value(value)
-      data[0].should eq "ENV_WITH_NO_VALUE"
-      data[1].should eq ""
+      data[:key].should eq "ENV_WITH_NO_VALUE"
+      data[:value].should eq ""
     end
   end
 
