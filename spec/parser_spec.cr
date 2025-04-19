@@ -75,7 +75,7 @@ describe LuckyEnv::Parser do
       typeof(data).should eq Hash(String, String)
       data["DOMAIN"].should eq "STRING"
       data["DB_PORT"].should eq "INT32"
-      data["HOST"].should eq "FLOAT64"
+      data["HOST"].should eq "STRING"
       data["ENABLE_CACHE"].should eq "BOOL"
     end
 
