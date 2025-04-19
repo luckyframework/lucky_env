@@ -52,7 +52,7 @@ describe LuckyEnv::Parser do
 
   describe "read_file" do
     it "returns a Hash with all the loaded key/values" do
-      data = parser.read_file("./spec/support/.env")
+      data = parser.read_file("./spec/support/.env")[:kv]
 
       typeof(data).should eq Hash(String, String)
       data["LUCKY_ENV"].should eq "development"
@@ -63,6 +63,20 @@ describe LuckyEnv::Parser do
       data["APP_NAME"].should eq "my_app"
       data["DB_NAME"].should eq "my_app_development"
       data["LITERAL"].should eq "${NOT_EXISTS_ENV}"
+      data["DOMAIN"].should eq "localhost"
+      data["DB_PORT"].should eq "5430"
+      data["HOST"].should eq "0.0.0.0"
+      data["ENABLE_CACHE"].should eq "true"
+    end
+
+    it "returns a Hash with all the loaded key/types" do
+      data = parser.read_file("./spec/support/.env")[:kt]
+
+      typeof(data).should eq Hash(String, String)
+      data["DOMAIN"].should eq "STRING"
+      data["DB_PORT"].should eq "INT32"
+      data["HOST"].should eq "FLOAT64"
+      data["ENABLE_CACHE"].should eq "BOOL"
     end
 
     it "raises on duplicate keys detected" do

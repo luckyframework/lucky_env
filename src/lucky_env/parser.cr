@@ -50,7 +50,7 @@ module LuckyEnv
 
         keys = hash.keys
 
-        hash.transform_values do |value|
+        hash = hash.transform_values do |value|
           keys.each do |key|
             if value =~ /\$\{#{key}\}/
               value = value.sub("${#{key}}", hash[key])
