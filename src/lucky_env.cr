@@ -11,19 +11,21 @@ module LuckyEnv
     end
   end
 
-  macro add_key
-    {{ run("./load_env") }}
+  # A macro that generates method definitions for environment variables,
+  # to be accessed in a type-safe manner at compile time.
+  #
+  # This macro executes an external script (`./static_load_env`) with the
+  # provided `env_file_path` to statically load and define the environment
+  # variables as methods.
+  macro static_load(env_file_path)
+    {{ run("./static_load_env", env_file_path) }}
   end
 
-  # def load_env(file_path : String) : Hash(String, String)
-  #   data= Parser.new.read_file(file_path)
-  #   p! data
-  #   # key_values, key_types = Parser.new.read_file(file_path)
-
-  #   data[:kv].each do |k, v|
-  #     add_key(k, v, data[:kt][k])
-  #   end
-  # end
+  # This is a shorthand for calling `LuckyEnv.static_load(env_file_path)`,
+  # but it determines the appropriate environment file dynamically.
+  macro static_load
+    {{ run("./static_load_env") }}
+  end
 
   # Parses the `file_path`, and loads the results in to `ENV`
   # raises `LuckyEnv::MissingFileError` if the file is missing
@@ -57,5 +59,4 @@ module LuckyEnv
   add_env :development
   add_env :production
   add_env :test
-  add_key
 end
