@@ -25,7 +25,7 @@ module StringModifier
     key = key.gsub(regex, "") # KEY_NAME(type) => KEY_NAME
 
     if type.nil?
-      type = "String"
+      type = "STRING"
     end
 
     {key, type}
