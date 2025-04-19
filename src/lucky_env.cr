@@ -30,7 +30,6 @@ module LuckyEnv
     end
   end
 
-
   # Loads the appropriate environment file from the project root directory based on the value of `ENV["LUCKY_ENV"]`.
   #
   # This method attempts to read one of the following files depending on the environment:
@@ -38,7 +37,7 @@ module LuckyEnv
   # - `.env.production` for the production environment
   # - `.env.testing` for the testing environment
   #
-  # If no specific file is found for the current environment, it falls back to reading `.env`.
+  # Falls back to reading `.env` if no specific file is found for the current environment.
   # raises LuckyEnv::MissingFileError if no environment file is found.
   def self.load : Hash(String, String)
     dev_env = ".env.development"
