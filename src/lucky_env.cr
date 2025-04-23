@@ -11,6 +11,58 @@ module LuckyEnv
     end
   end
 
+
+  # {%  parsed_data = however_this_happens %}
+  # {% for key, val in parsed_data %}
+  #   {% type = some_guesswork_on(val) %}
+  #    def self.{{ key }} : {{ type }}
+  #       ENV[{{ key.stringify }}].to_some_conversion.as({{ type }})
+  #     end
+  #  {% end %}
+  # {{ p! env_data.id }}
+  # {% key = key = scanner.scan_until(/=/).try(&.chomp('=').strip) %}
+  # {% matches = line.scan(/(?<key>[\w\d\_]+)=(?<value>.*)/) %}
+  macro init_env
+    {% env_data = read_file(".env") %}
+    {% regex = /(?<key>[\w\d_]+)=(?<value>.*)/ %}
+
+    {% for line in env_data.lines %}
+      {% line = line.strip.chomp %}
+      {% if !line.starts_with?("#") && !line.empty? %}
+        {% hash, str = line.scan(/(?<key>[\w\d\_]+)=(?<value>.*)/) %}
+        {% if !hash.nil? %}
+          # Determine the return type
+          {% value = hash["value"] %}
+          {% def_name = hash["key"].downcase %}
+          {% type = "String" %}
+
+          {% if value =~ /^\d+$/ %}
+            {% type = "Int32" %}
+          {% elsif value =~ /^\d+\.\d+$/ %}
+            {% type = "Float64" %}
+          {% elsif value =~ /^true|false$/ %}
+            {% type = "Bool" %}
+            {% def_name += "?" %}
+          {% end %}
+
+          # generate the function
+          {% key = hash["key"] %}
+          def LuckyEnv.{{ def_name.id }} : {{ type.id }}
+            {% if type == "Bool" %}
+              ENV[{{ key }}] == "true"
+            {% elsif type == "Int32" %}
+              ENV[{{ key }}].to_i
+            {% elsif type == "Float64" %}
+              ENV[{{ key }}].to_f
+            {% else %}
+              ENV[{{ key }}].as({{ type.id }})
+            {% end %}
+          end
+        {% end %}
+      {% end %}
+    {% end %}
+  end
+
   # Parses the `file_path`, and loads the results in to `ENV`
   # raises `LuckyEnv::MissingFileError` if the file is missing
   def self.load(file_path : String) : Hash(String, String)
