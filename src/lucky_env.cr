@@ -11,53 +11,73 @@ module LuckyEnv
     end
   end
 
+  # Generates type-safe method definitions for env variables.
+  #
+  # Usage:
+  #   `LuckyEnv.init_env` or
+  #   `LuckyEnv.init_env "/path/to/env-file"`
+  #
+  # Env File:
+  # ```
+  #  LUCKY_ENV(String)=development
+  #  DEV_PORT(Int32)=3500
+  #  ENABLE_CACHE(Bool)=true
+  # ```
+  #
+  # Output:
+  # ```
+  # def LuckyEnv.lucky_env : String
+  #   ENV["LUCKY_ENV"]
+  # end
+  # def LuckyEnv.dev_port : Int32
+  #   ENV["DEV_PORT"].to_i
+  # end
+  # def LuckyEnv.enable_cache? : Bool
+  #   ENV["enable_cache"] == "true"
+  # end
+  # ```
+  macro init_env(path = ".env")
+    {% env_data = read_file?(path) %}
 
-  # {%  parsed_data = however_this_happens %}
-  # {% for key, val in parsed_data %}
-  #   {% type = some_guesswork_on(val) %}
-  #    def self.{{ key }} : {{ type }}
-  #       ENV[{{ key.stringify }}].to_some_conversion.as({{ type }})
-  #     end
-  #  {% end %}
-  # {{ p! env_data.id }}
-  # {% key = key = scanner.scan_until(/=/).try(&.chomp('=').strip) %}
-  # {% matches = line.scan(/(?<key>[\w\d\_]+)=(?<value>.*)/) %}
-  macro init_env
-    {% env_data = read_file(".env") %}
-    {% regex = /(?<key>[\w\d_]+)=(?<value>.*)/ %}
+    {% if env_data.nil? %}
+      {{ warning("Skipping generating method definitions for '#{path.id}'. File is empty or does not exits. Did you forget to create it?") }}
+    {% else %}
 
-    {% for line in env_data.lines %}
-      {% line = line.strip.chomp %}
-      {% if !line.starts_with?("#") && !line.empty? %}
-        {% hash, str = line.scan(/(?<key>[\w\d\_]+)=(?<value>.*)/) %}
-        {% if !hash.nil? %}
-          # Determine the return type
-          {% value = hash["value"] %}
-          {% def_name = hash["key"].downcase %}
-          {% type = "String" %}
+      {% regex = /(?<key>[\w\d_]+)=(?<value>.*)/ %}
 
-          {% if value =~ /^\d+$/ %}
-            {% type = "Int32" %}
-          {% elsif value =~ /^\d+\.\d+$/ %}
-            {% type = "Float64" %}
-          {% elsif value =~ /^true|false$/ %}
-            {% type = "Bool" %}
-            {% def_name += "?" %}
+      {% for line in env_data.lines %}
+        {% line = line.strip.chomp %}
+        {% if !line.starts_with?("#") && !line.empty? %}
+          {% hash, str = line.scan(/(?<key>[\w\d\_]+)=(?<value>.*)/) %}
+
+          {% if !hash.nil? %}
+            {% value = hash["value"] %}
+            {% def_name = hash["key"].downcase %}
+            {% type = "String" %}
+
+            {% if value =~ /^\d+$/ %}
+              {% type = "Int32" %}
+            {% elsif value =~ /^\d+\.\d+$/ %}
+              {% type = "Float64" %}
+            {% elsif value =~ /^true|false$/ %}
+              {% type = "Bool" %}
+              {% def_name += "?" %}
+            {% end %}
+
+            {% key = hash["key"] %}
+            def LuckyEnv.{{ def_name.id }} : {{ type.id }}
+              {% if type == "Bool" %}
+                ENV[{{ key }}] == "true"
+              {% elsif type == "Int32" %}
+                ENV[{{ key }}].to_i
+              {% elsif type == "Float64" %}
+                ENV[{{ key }}].to_f
+              {% else %}
+                ENV[{{ key }}].as({{ type.id }})
+              {% end %}
+            end
           {% end %}
 
-          # generate the function
-          {% key = hash["key"] %}
-          def LuckyEnv.{{ def_name.id }} : {{ type.id }}
-            {% if type == "Bool" %}
-              ENV[{{ key }}] == "true"
-            {% elsif type == "Int32" %}
-              ENV[{{ key }}].to_i
-            {% elsif type == "Float64" %}
-              ENV[{{ key }}].to_f
-            {% else %}
-              ENV[{{ key }}].as({{ type.id }})
-            {% end %}
-          end
         {% end %}
       {% end %}
     {% end %}
