@@ -19,9 +19,9 @@ module LuckyEnv
   #
   # Env File:
   # ```
-  #  LUCKY_ENV(String)=development
-  #  DEV_PORT(Int32)=3500
-  #  ENABLE_CACHE(Bool)=true
+  # LUCKY_ENV    = development
+  # DEV_PORT     = 3500
+  # ENABLE_CACHE = true
   # ```
   #
   # Output:
@@ -29,13 +29,16 @@ module LuckyEnv
   # def LuckyEnv.lucky_env : String
   #   ENV["LUCKY_ENV"]
   # end
+  #
   # def LuckyEnv.dev_port : Int32
   #   ENV["DEV_PORT"].to_i
   # end
+  #
   # def LuckyEnv.enable_cache? : Bool
   #   ENV["enable_cache"] == "true"
   # end
   # ```
+  #
   macro init_env(path = ".env")
     {% env_data = read_file?(path) %}
 
