@@ -45,13 +45,13 @@ module LuckyEnv
     test_env = ".env.test"
 
     if LuckyEnv.development? && self.file_loadable?(dev_env)
-      return self.load(dev_env)
+      self.load(dev_env)
     elsif LuckyEnv.production? && self.file_loadable?(prod_env)
-      return self.load(prod_env)
+      self.load(prod_env)
     elsif LuckyEnv.test? && self.file_loadable?(test_env)
-      return self.load(test_env)
+      self.load(test_env)
     else
-      return load(".env") # fallback to ".env"
+      load(".env") # fallback to ".env"
     end
   end
 
