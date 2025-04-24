@@ -40,49 +40,53 @@ module LuckyEnv
   # ```
   #
   macro init_env(path = ".env")
-    {% env_data = read_file?(path) %}
+    {% if compare_versions(Crystal::VERSION, "1.16.0") >= 0 %}
+      {% env_data = read_file?(path) %}
 
-    {% if env_data.nil? %}
-      {{ warning("Skipping generating method definitions for '#{path.id}'. File is empty or does not exits. Did you forget to create it?") }}
-    {% else %}
+      {% if env_data.nil? %}
+        {{ warning("Skipping generating method definitions for '#{path.id}'. File is empty or does not exits. Did you forget to create it?") }}
+      {% else %}
 
-      {% regex = /(?<key>[\w\d_]+)=(?<value>.*)/ %}
+        {% regex = /(?<key>[\w\d_]+)=(?<value>.*)/ %}
 
-      {% for line in env_data.lines %}
-        {% line = line.strip.chomp %}
-        {% if !line.starts_with?("#") && !line.empty? %}
-          {% hash, str = line.scan(/(?<key>[\w\d\_]+)=(?<value>.*)/) %}
+        {% for line in env_data.lines %}
+          {% line = line.strip.chomp %}
+          {% if !line.starts_with?("#") && !line.empty? %}
+            {% hash, str = line.scan(/(?<key>[\w\d\_]+)=(?<value>.*)/) %}
 
-          {% if !hash.nil? %}
-            {% value = hash["value"] %}
-            {% def_name = hash["key"].downcase %}
-            {% type = "String" %}
+            {% if !hash.nil? %}
+              {% value = hash["value"] %}
+              {% def_name = hash["key"].downcase %}
+              {% type = "String" %}
 
-            {% if value =~ /^\d+$/ %}
-              {% type = "Int32" %}
-            {% elsif value =~ /^\d+\.\d+$/ %}
-              {% type = "Float64" %}
-            {% elsif value =~ /^true|false$/ %}
-              {% type = "Bool" %}
-              {% def_name += "?" %}
+              {% if value =~ /^\d+$/ %}
+                {% type = "Int32" %}
+              {% elsif value =~ /^\d+\.\d+$/ %}
+                {% type = "Float64" %}
+              {% elsif value =~ /^true|false$/ %}
+                {% type = "Bool" %}
+                {% def_name += "?" %}
+              {% end %}
+
+              {% key = hash["key"] %}
+              def LuckyEnv.{{ def_name.id }} : {{ type.id }}
+                {% if type == "Bool" %}
+                  ENV[{{ key }}] == "true"
+                {% elsif type == "Int32" %}
+                  ENV[{{ key }}].to_i
+                {% elsif type == "Float64" %}
+                  ENV[{{ key }}].to_f
+                {% else %}
+                  ENV[{{ key }}].as({{ type.id }})
+                {% end %}
+              end
             {% end %}
 
-            {% key = hash["key"] %}
-            def LuckyEnv.{{ def_name.id }} : {{ type.id }}
-              {% if type == "Bool" %}
-                ENV[{{ key }}] == "true"
-              {% elsif type == "Int32" %}
-                ENV[{{ key }}].to_i
-              {% elsif type == "Float64" %}
-                ENV[{{ key }}].to_f
-              {% else %}
-                ENV[{{ key }}].as({{ type.id }})
-              {% end %}
-            end
           {% end %}
-
         {% end %}
       {% end %}
+    {% else %}
+      {{ warning("LuckyEnv.init_env requires crystal >= 1.16.0. Skipping method generation...") }}
     {% end %}
   end
 
