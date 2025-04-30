@@ -30,6 +30,35 @@ module LuckyEnv
     end
   end
 
+  # Loads the appropriate environment file from the project root directory based on the value of `ENV["LUCKY_ENV"]`.
+  #
+  # This method attempts to read one of the following files depending on the environment:
+  # - `.env.development` for the development environment
+  # - `.env.production` for the production environment
+  # - `.env.testing` for the testing environment
+  #
+  # Falls back to reading `.env` if no specific file is found for the current environment.
+  # raises LuckyEnv::MissingFileError if no environment file is found.
+  def self.load : Hash(String, String)
+    dev_env = ".env.development"
+    prod_env = ".env.production"
+    test_env = ".env.test"
+
+    if LuckyEnv.development? && self.file_loadable?(dev_env)
+      self.load(dev_env)
+    elsif LuckyEnv.production? && self.file_loadable?(prod_env)
+      self.load(prod_env)
+    elsif LuckyEnv.test? && self.file_loadable?(test_env)
+      self.load(test_env)
+    else
+      load(".env") # fallback to ".env"
+    end
+  end
+
+  private def self.file_loadable?(file_path : String) : Bool
+    File.exists?(file_path) || File.symlink?(file_path)
+  end
+
   def self.task? : Bool
     ENV["LUCKY_TASK"]? == "true" || ENV["LUCKY_TASK"]? == "1"
   end
