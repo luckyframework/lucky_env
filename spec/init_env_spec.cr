@@ -1,3 +1,4 @@
+{% skip_file if compare_versions(Crystal::VERSION, "1.16.0") < 0 %}
 require "./spec_helper"
 
 # Must be called up here, otherwise crystal throws "Error: can't declare def dynamically" error
